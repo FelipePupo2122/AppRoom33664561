@@ -5,12 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import br.edu.up.rgm.approom33664561.data.Item
+import br.edu.up.rgm.approom33664561.data.ItemsRepository
 import java.text.NumberFormat
 
 /**
  * ViewModel to validate and insert items in the Room database.
  */
-class ItemEntryViewModel : ViewModel() {
+class ItemEntryViewModel(itemsRepository: ItemsRepository) : ViewModel() {
 
     /**
      * Holds current item ui state
@@ -34,9 +35,7 @@ class ItemEntryViewModel : ViewModel() {
     }
 }
 
-/**
- * Represents Ui State for an Item.
- */
+// estado da ui item
 data class ItemUiState(
     val itemDetails: ItemDetails = ItemDetails(),
     val isEntryValid: Boolean = false

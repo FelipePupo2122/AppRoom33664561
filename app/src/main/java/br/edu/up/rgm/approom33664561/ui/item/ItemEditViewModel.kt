@@ -12,6 +12,7 @@ import br.edu.up.rgm.approom33664561.data.ItemsRepository
  */
 class ItemEditViewModel(
     savedStateHandle: SavedStateHandle,
+    itemsRepository: ItemsRepository,
 ) : ViewModel() {
 
     /**
