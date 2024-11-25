@@ -1,4 +1,4 @@
-package v.ui.item
+package br.edu.up.rgm.approom33664561.ui.item
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -46,10 +46,6 @@ import br.edu.up.rgm.approom33664561.InventoryTopAppBar
 import br.edu.up.rgm.approom33664561.R
 import br.edu.up.rgm.approom33664561.data.Item
 import br.edu.up.rgm.approom33664561.ui.AppViewModelProvider
-import br.edu.up.rgm.approom33664561.ui.item.ItemDetailsUiState
-import br.edu.up.rgm.approom33664561.ui.item.ItemDetailsViewModel
-import br.edu.up.rgm.approom33664561.ui.item.formatedPrice
-import br.edu.up.rgm.approom33664561.ui.item.toItem
 import br.edu.up.rgm.approom33664561.ui.navigation.NavigationDestination
 import br.edu.up.rgm.approom33664561.ui.theme.InventoryTheme
 import kotlinx.coroutines.launch
@@ -101,10 +97,7 @@ fun ItemDetailsScreen(
             itemDetailsUiState = uiState.value,
             onSellItem = { viewModel.reduceQuantityByOne() },
             onDelete = {
-                // Note: If the user rotates the screen very fast, the operation may get cancelled
-                // and the item may not be deleted from the Database. This is because when config
-                // change occurs, the Activity will be recreated and the rememberCoroutineScope will
-                // be cancelled - since the scope is bound to composition.
+              // ação de rotacionar a pagina, rotacionou vai tirar os itens ali sendo que é uma nova ação.
                 coroutineScope.launch {
                     viewModel.deleteItem()
                     navigateBack()
@@ -253,7 +246,7 @@ fun ItemDetailsScreenPreview() {
     InventoryTheme {
         ItemDetailsBody(
             ItemDetailsUiState(
-            outOfStock = true, itemDetails = br.edu.up.rgm.approom33664561.ui.item.ItemDetails(
+            outOfStock = true, itemDetails = ItemDetails(
                 1,
                 "Pen",
                 "$100",

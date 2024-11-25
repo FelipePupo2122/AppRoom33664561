@@ -20,10 +20,11 @@ abstract class InventoryDatabase : RoomDatabase() {
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, InventoryDatabase::class.java, "item_database")
                     /**
-                     * Setting this option in your app's database builder means that Room
-                     * permanently deletes all data from the tables in your database when it
-                     * attempts to perform a migration with no defined migration path.
+                     * Definir esta opção no construtor de banco de dados do seu aplicativo significa que o Room
+                     * exclui permanentemente todos os dados das tabelas do seu banco de dados quando
+                     * tenta realizar uma migração sem caminho de migração definido.
                      */
+                        //analisada essa opção de um estudo feito via video no youtube
                     .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }

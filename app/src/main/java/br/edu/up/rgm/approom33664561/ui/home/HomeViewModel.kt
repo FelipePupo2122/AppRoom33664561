@@ -9,15 +9,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
-/**
- * ViewModel to retrieve all items in the Room database.
- */
+
 class HomeViewModel(itemsRepository: ItemsRepository) : ViewModel() {
 
-    /**
-     * Holds home ui state. The list of items are retrieved from [ItemsRepository] and mapped to
-     * [HomeUiState]
-     */
+  //retornar estados dos itens ui para apresentar na tela
     val homeUiState: StateFlow<HomeUiState> =
         itemsRepository.getAllItemsStream().map { HomeUiState(it) }
             .stateIn(
@@ -31,7 +26,5 @@ class HomeViewModel(itemsRepository: ItemsRepository) : ViewModel() {
     }
 }
 
-/**
- * Ui State for HomeScreen
- */
+// lista os itens
 data class HomeUiState(val itemList: List<Item> = listOf())

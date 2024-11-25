@@ -29,8 +29,8 @@ import br.edu.up.rgm.approom33664561.ui.item.ItemEditDestination
 import br.edu.up.rgm.approom33664561.ui.item.ItemEditScreen
 import br.edu.up.rgm.approom33664561.ui.item.ItemEntryDestination
 import br.edu.up.rgm.approom33664561.ui.item.ItemEntryScreen
-import v.ui.item.ItemDetailsDestination
-import v.ui.item.ItemDetailsScreen
+import br.edu.up.rgm.approom33664561.ui.item.ItemDetailsDestination
+import br.edu.up.rgm.approom33664561.ui.item.ItemDetailsScreen
 
 /**
  * Provides Navigation graph for the application.

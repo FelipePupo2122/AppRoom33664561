@@ -11,17 +11,13 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel to retrieve and update an item from the [ItemsRepository]'s data source.
- */
+
 class ItemEditViewModel(
     savedStateHandle: SavedStateHandle,
     private val itemsRepository: ItemsRepository
 ) : ViewModel() {
 
-    /**
-     * Holds current item ui state
-     */
+
     var itemUiState by mutableStateOf(ItemUiState())
         private set
 
@@ -35,20 +31,13 @@ class ItemEditViewModel(
                 .toItemUiState(true)
         }
     }
-
-    /**
-     * Update the item in the [ItemsRepository]'s data source
-     */
+    // aqui fica a parte de atualização dos itens e do seu estado, como validação de campos e estado que esta
     suspend fun updateItem() {
         if (validateInput(itemUiState.itemDetails)) {
             itemsRepository.updateItem(itemUiState.itemDetails.toItem())
         }
     }
 
-    /**
-     * Updates the [itemUiState] with the value provided in the argument. This method also triggers
-     * a validation for input values.
-     */
     fun updateUiState(itemDetails: ItemDetails) {
         itemUiState =
             ItemUiState(itemDetails = itemDetails, isEntryValid = validateInput(itemDetails))

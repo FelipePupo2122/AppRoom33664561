@@ -1,10 +1,10 @@
 package br.edu.up.rgm.approom33664561.ui.item
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -22,27 +22,27 @@ import br.edu.up.rgm.approom33664561.ui.theme.InventoryTheme
 import kotlinx.coroutines.launch
 
 object ItemEditDestination : NavigationDestination {
-    override val route = "item_edit"
+    override val route = "edit_item"
     override val titleRes = R.string.edit_item_title
-    const val itemIdArg = "itemId"
-    val routeWithArgs = "$route/{$itemIdArg}"
+    const val argumentKey = "itemId"
+    val routeWithArguments = "$route/{$argumentKey}"
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemEditScreen(
-    navigateBack: () -> Unit,
-    onNavigateUp: () -> Unit,
+    onBackNavigate: () -> Unit,
+    navigateUp: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: ItemEditViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val coroutineScope = rememberCoroutineScope()
+    val scope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             InventoryTopAppBar(
                 title = stringResource(ItemEditDestination.titleRes),
                 canNavigateBack = true,
-                navigateUp = onNavigateUp
+                navigateUp = navigateUp
             )
         },
         modifier = modifier
@@ -51,13 +51,9 @@ fun ItemEditScreen(
             itemUiState = viewModel.itemUiState,
             onItemValueChange = viewModel::updateUiState,
             onSaveClick = {
-                // Note: If the user rotates the screen very fast, the operation may get cancelled
-                // and the item may not be updated in the Database. This is because when config
-                // change occurs, the Activity will be recreated and the rememberCoroutineScope will
-                // be cancelled - since the scope is bound to composition.
-                coroutineScope.launch {
+                scope.launch {
                     viewModel.updateItem()
-                    navigateBack()
+                    onBackNavigate()
                 }
             },
             modifier = Modifier
@@ -73,9 +69,8 @@ fun ItemEditScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun ItemEditScreenPreview() {
+fun PreviewItemEditScreen() {
     InventoryTheme {
-        ItemEditScreen(navigateBack = { /*Do nothing*/ }, onNavigateUp = { /*Do nothing*/ })
+        ItemEditScreen(onBackNavigate = { /*No action*/ }, navigateUp = { /*No action*/ })
     }
 }
-
