@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +17,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.dimensionResource
@@ -30,7 +29,6 @@ import br.edu.up.rgm.approom33664561.R
 import br.edu.up.rgm.approom33664561.ui.AppViewModelProvider
 import br.edu.up.rgm.approom33664561.ui.navigation.NavigationDestination
 import br.edu.up.rgm.approom33664561.ui.theme.InventoryTheme
-import kotlinx.coroutines.launch
 import java.util.Currency
 import java.util.Locale
 
@@ -47,7 +45,6 @@ fun ItemEntryScreen(
     canNavigateBack: Boolean = true,
     viewModel: ItemEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
-    val coroutineScope = rememberCoroutineScope()
     Scaffold(
         topBar = {
             InventoryTopAppBar(
@@ -57,25 +54,18 @@ fun ItemEntryScreen(
             )
         }
     ) { innerPadding ->
-        val paddingModifier = Modifier
-            .padding(
-                start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
-                top = innerPadding.calculateTopPadding(),
-                end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
-            )
-            .verticalScroll(rememberScrollState())
-            .fillMaxWidth()
-
         ItemEntryBody(
             itemUiState = viewModel.itemUiState,
             onItemValueChange = viewModel::updateUiState,
-            onSaveClick = {
-                coroutineScope.launch {
-                    viewModel.saveItem()
-                    navigateBack()
-                }
-            },
-            modifier = paddingModifier
+            onSaveClick = { },
+            modifier = Modifier
+                .padding(
+                    start = innerPadding.calculateStartPadding(LocalLayoutDirection.current),
+                    end = innerPadding.calculateEndPadding(LocalLayoutDirection.current),
+                    top = innerPadding.calculateTopPadding()
+                )
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
         )
     }
 }
@@ -88,8 +78,8 @@ fun ItemEntryBody(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium)),
-        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large))
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.padding_large)),
+        modifier = modifier.padding(dimensionResource(id = R.dimen.padding_medium))
     ) {
         ItemInputForm(
             itemDetails = itemUiState.itemDetails,
@@ -173,12 +163,10 @@ fun ItemInputForm(
 @Composable
 private fun ItemEntryScreenPreview() {
     InventoryTheme {
-        ItemEntryBody(
-            itemUiState = ItemUiState(
-                ItemDetails(name = "Item name", price = "10.00", quantity = "5")
-            ),
-            onItemValueChange = {},
-            onSaveClick = {}
-        )
+        ItemEntryBody(itemUiState = ItemUiState(
+            ItemDetails(
+                name = "Item name", price = "10.00", quantity = "5"
+            )
+        ), onItemValueChange = {}, onSaveClick = {})
     }
 }

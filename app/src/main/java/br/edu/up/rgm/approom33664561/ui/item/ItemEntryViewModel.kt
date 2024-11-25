@@ -5,24 +5,26 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import br.edu.up.rgm.approom33664561.data.Item
-import br.edu.up.rgm.approom33664561.data.ItemsRepository
 import java.text.NumberFormat
 
-class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewModel() {
+/**
+ * ViewModel to validate and insert items in the Room database.
+ */
+class ItemEntryViewModel : ViewModel() {
+
+    /**
+     * Holds current item ui state
+     */
     var itemUiState by mutableStateOf(ItemUiState())
         private set
 
+    /**
+     * Updates the [itemUiState] with the value provided in the argument. This method also triggers
+     * a validation for input values.
+     */
     fun updateUiState(itemDetails: ItemDetails) {
-        itemUiState = ItemUiState(
-            itemDetails = itemDetails,
-            isEntryValid = validateInput(itemDetails)
-        )
-    }
-
-    suspend fun saveItem() {
-        if (validateInput()) {
-            itemsRepository.insertItem(itemUiState.itemDetails.toItem())
-        }
+        itemUiState =
+            ItemUiState(itemDetails = itemDetails, isEntryValid = validateInput(itemDetails))
     }
 
     private fun validateInput(uiState: ItemDetails = itemUiState.itemDetails): Boolean {
@@ -32,6 +34,9 @@ class ItemEntryViewModel(private val itemsRepository: ItemsRepository) : ViewMod
     }
 }
 
+/**
+ * Represents Ui State for an Item.
+ */
 data class ItemUiState(
     val itemDetails: ItemDetails = ItemDetails(),
     val isEntryValid: Boolean = false
@@ -44,6 +49,7 @@ data class ItemDetails(
     val quantity: String = "",
 )
 
+
 fun ItemDetails.toItem(): Item = Item(
     id = id,
     name = name,
@@ -51,10 +57,15 @@ fun ItemDetails.toItem(): Item = Item(
     quantity = quantity.toIntOrNull() ?: 0
 )
 
+fun Item.formatedPrice(): String {
+    return NumberFormat.getCurrencyInstance().format(price)
+}
+
 fun Item.toItemUiState(isEntryValid: Boolean = false): ItemUiState = ItemUiState(
     itemDetails = this.toItemDetails(),
     isEntryValid = isEntryValid
 )
+
 
 fun Item.toItemDetails(): ItemDetails = ItemDetails(
     id = id,
@@ -62,7 +73,3 @@ fun Item.toItemDetails(): ItemDetails = ItemDetails(
     price = price.toString(),
     quantity = quantity.toString()
 )
-
-fun Item.formatedPrice(): String {
-    return NumberFormat.getCurrencyInstance().format(price)
-}
