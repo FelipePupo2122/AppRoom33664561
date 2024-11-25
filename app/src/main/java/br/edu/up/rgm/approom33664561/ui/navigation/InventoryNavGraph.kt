@@ -25,12 +25,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import br.edu.up.rgm.approom33664561.ui.home.HomeDestination
 import br.edu.up.rgm.approom33664561.ui.home.HomeScreen
-import br.edu.up.rgm.approom33664561.ui.item.ItemDetailsDestination
-import br.edu.up.rgm.approom33664561.ui.item.ItemDetailsScreen
 import br.edu.up.rgm.approom33664561.ui.item.ItemEditDestination
 import br.edu.up.rgm.approom33664561.ui.item.ItemEditScreen
 import br.edu.up.rgm.approom33664561.ui.item.ItemEntryDestination
 import br.edu.up.rgm.approom33664561.ui.item.ItemEntryScreen
+import v.ui.item.ItemDetailsDestination
+import v.ui.item.ItemDetailsScreen
 
 /**
  * Provides Navigation graph for the application.

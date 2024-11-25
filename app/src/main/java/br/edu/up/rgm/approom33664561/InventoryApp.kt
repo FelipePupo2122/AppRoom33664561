@@ -2,9 +2,7 @@
 
 package br.edu.up.rgm.approom33664561
 
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.Icons.Filled
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -56,4 +54,3 @@ fun InventoryTopAppBar(
         }
     )
 }
-
